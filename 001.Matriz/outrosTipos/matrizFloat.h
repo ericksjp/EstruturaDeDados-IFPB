@@ -48,6 +48,25 @@ void preencherMatrizFloat(MatrizFloat matriz, float num)
     }
 }
 
+MatrizFloat somarMatrizFloat(MatrizFloat matriz1, MatrizFloat matriz2)
+{
+    MatrizFloat temp;
+    if (matriz1.matrizTamanho >= matriz2.matrizTamanho){
+        temp = matriz1;
+        for (int c = 0;  c < matriz2.matrizTamanho; c++){
+            *(temp.pont + c) += *(matriz2.pont + c);
+        }
+        return temp;
+    } else {
+        temp = matriz2;
+        for (int c = 0; c < matriz1.matrizTamanho; c++)
+        {
+           *(temp.pont + c) += *(matriz2.pont + c);
+        }
+        return temp;
+    }
+}
+
 void imprimirMatrizFloat(MatrizFloat matriz)
 {
     int breakLine = 0;

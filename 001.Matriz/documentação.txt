@@ -1,0 +1,178 @@
+1. Struct Matriz
+    - É criado um struct matriz, que vai conter informações para facilitar a manipulação dessa matriz, essa struct contém:
+        - O número de linhas e colunas da matriz;
+        - O tamanho total da matriz, que vai ser a multiplicação do número de linhas pelo número de colunas;
+        - Um ponteiro que vai apontar pro inicio do vetor que vai ser declarado posteriormente, atráves desse ponteiro, poderemos percorrer a matriz;
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+2. Funcão CriarMatriz
+    - Essa função vai ser responsavel pelo criação do struct Matriz em memoria;
+    - Ela tem como retorno o tipo Matriz, que é o struct mencionado anteriormente;
+    - Recebe como parametros, o número de linhas e de colunas da matriz;
+    - Ex: Matriz novaMatriz = criarMatriz (5,5);
+    - Funcionamento:
+        Matriz novaMatriz -> cria o struct que vai ser retornado em mémoria;
+        novaMatriz.linhas = linhas -> seta o número de linhas da matriz;
+        novaMatriz.colunas = colunas -> seta o número de colunas da matriz;
+        novaMatriz.tamanho = linhas * colunas -> seta o tamanho da matriz;
+        novaMatriz.vetor = (int *)malloc(linhas * colunas * sizeof(int));
+        - aloca na memoria, um espaço que vai comportar todos os elementos do tamanho do vetor.
+        - Ex: Linhas = 5; Colunas = 5 -> 5 * 5 * 4(tamanho de um tipo inteiro) = 100 bits;
+        - Foi alocado 100 bits, em espaço sequencial, ao longo desse espaço poderemos inserir os elementos ordenadamente e percorrelos.
+
+        return novaMatriz -> retorna a matriz criada;
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+3. Procedimento inserirElemento:
+    - Essa Procedimento vai ser responsavel por inserir um número em uma posição da matriz;
+    - Tem como retorno void;
+    - Recebe como parametro a matriz em que o número vai ser inserido, a linha e a coluna da inserção e o número a ser inserido.
+    - Ex: inserirElemento(matriz, 2, 2, 5);
+    - Funcionamento:
+
+        if (linha < 1 || linha > matriz.linhas || coluna < 1 || coluna > matriz.colunas)
+        {
+            printf("Erro: Índices fora dos limites da matriz.\n");
+            exit(1);
+        }
+        - Condicional para verificar se as coordenadas passadas são inválidas, se foram, para a execução do programa e imprime uma mensagem de erro.
+
+        matriz.vetor [(linha - 1) * matriz.colunas + (coluna - 1)] = elemento;
+        - Acessa o ponteiro do struct, acessa a posição do vetor em que o número vai ser inserido usando a formula entre [], e atribui o número a posição.
+        - Ex: vetor [30] -> a linguagem me permite fazer isso, **aritmetica de ponteiros.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+4. Procedimento preencherMatriz:
+    - Essa Procedimento vai ser responsavel por preencher todas as posições da matriz, evitando o lixo de mémoria.
+    - Tem como retorno void;
+    - Recebe como parametros a matriz que vai ser preenchida, e o número que será usado para preenche-la;
+    - Ex preencherMatriz (matriz, 1);
+    - Funcionamento
+
+        for (int c = 0; c < matriz.tamanho; c++)
+        {
+            matriz.vetor[c] = num;
+        }
+        - Looping que vai percorrer todo o vetor do struct, usando a informação tamanho, que também está no struct;
+        - A cada iteração, é acessado uma posição do vetor, e essa posição é atribuida ao número.
+    
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+5. Procedimento imprimirMatriz:
+    - Essa Procedimento vai ser responsavel por imprimir a matriz no terminal;
+    - Tem como retorno void;
+    - Recebe como parametro a matriz que será imprimida;
+    - Ex: imprimirMatriz(matriz);
+    - Funcionamento:
+
+        void imprimirMatriz(Matriz matriz)
+            {
+                int breakLine = 0; -> responsavel pela quebra de linha
+
+                for (int c = 0; c < matriz.tamanho; c++)
+                {
+                    printf("%d ", matriz.vetor[c]);
+                    breakLine++;
+
+                    if (breakLine == matriz.colunas)
+                    {
+                        printf("\n");
+                        breakLine = 0;
+                    }
+                }
+                - A cada iteração do looping, será imprimido o número correspondente a posição do vetor.
+                - Isso só é possivel, porque no nosso struct temos o ponteiro vetor, e ele aponta pro começo do vetor alocado quando invocamos a função criar matriz;
+                - vetor[0] -> p0 | vetor[1] -> p1 ...
+                - breakLine tambem será incrementado a cada iteração;
+                - Quando o breakLine for igual ao numero de colunas da matriz, a linha será quebrada.
+            }    
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+6. Procedimento liberarMatriz:
+    - Esse procedimento vai ser responsavel por liberar o vetor alocado dinamicamente e setar as variaveis do struct para 0;
+    - Recebe como parametro a matriz (por referencia) a ser liberada;
+    - Funcionamento:
+
+        void liberarMatriz(Matriz *matriz)
+            {
+                free(matriz->vetor); -> libera o vetor alocado dinamicamente;
+                matriz->vetor = NULL; -> seta o ponteiro para nulo;
+                matriz->linhas = 0;
+                matriz->colunas = 0; -> seta as variaveia para 0;
+                matriz->tamanho = 0;
+            }
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+7. Somar, subtrair e multiplicar matriz:
+    - Funções responsaveis por fazer calculos entre 2 matrizes e retornar uma nova matriz com o resultado;
+    - Retorno Matriz;
+    - Recebe como parametro as 2 matrizes a serem calculadas;
+    - Ex somarMatriz(matriz1,matriz2);
+    - Logica: A matriz com o maior numero de elementos vai ser a matriz base e a partir dela, vamos inserir os elementos da outra matriz de acordo
+      com o calculo. Essa logica é necessaria, pois o vetor de uma matriz 3*3 é maior do que o vetor de uma matriz 1*1, e se o looping fosse baseado
+      na matriz 3*3, daria erro de index na matriz 1*1;
+      
+
+    Funcionamento: 
+
+       Matriz somarMatriz(Matriz matriz1, Matriz matriz2)
+        {
+            Matriz temp; -> matriz temporaria;
+            if (matriz1.tamanho >= matriz2.tamanho) -> Condicional para indicar a matriz com o maior tamanho;
+            {
+                temp = matriz1;
+                for (int c = 0; c < matriz2.tamanho; c++) -> looping para percorrer tanto a matriz base, quanto a matriz de menor tamanho.
+                {
+                    temp.vetor[c] += matriz2.vetor[c]; -> somando os termos da matriz base, com os termos da matriz menor;
+                }
+                return temp; -> retornando a matriz temporaria;
+            }
+            else
+            {
+                temp = matriz2;
+                for (int c = 0; c < matriz1.tamanho; c++)
+                {
+                    temp.vetor [c] += matriz2.vetor[c];
+                }
+                return temp;
+            }
+        } 
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+8. Função acessarElemento:
+    - Função responsavel por acessar e retornar um numero em uma posição da matriz;
+    - Recebe como parametros a matriz e as coordenadas da matriz a ser acessada;
+    - Retorna um inteiro;
+    - Funcionamento:
+
+    int acessarElementoInt(Matriz matriz, int linha, int coluna)
+        {
+            if (linha < 1 || linha > matriz.linhas || coluna < 1 || coluna > matriz.colunas) -> condicional para verificar se as coordenadas existem na matriz;
+            {
+                printf("Erro: Índices fora dos limites da matriz.\n");
+                exit(1);
+            }
+            return matriz.vetor[(linha - 1) * matriz.colunas + (coluna - 1)]; -> retornando o numero em uma posição especifica do vetor, usando o calculo.
+        }
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+9. Funções total, produto Matriz;
+    - Funções responsaveis por retornar a soma e o produto de todos os termos da matriz;
+    - Recebe como parametro a matriz;
+    - Retorna um inteiro;
+    - Funcionamento: 
+
+        int totalMatriz (Matriz matriz){
+            int acumulador = 0; 
+            for (int c = 0; c < matriz.tamanho; c++){ -> looping responsavel por percorrer o vetor;
+                acumulador += matriz.vetor[c]; -> usando o acumulador para fazer a soma;
+            }
+            return acumulador; -> retornando o acumulador;
+        }

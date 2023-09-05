@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "matrizChar.h"
+#include "matriz.h"
 
 int main()
 {
@@ -10,15 +10,15 @@ int main()
     printf("Digite o número de colunas da matriz: ");
     scanf("%d", &colunas);
 
-    MatrizChar matriz = criarMatrizChar(linhas, colunas);
+    Matriz matriz = criarMatriz(linhas, colunas);
 
     char caractere;
     printf("Digite o caractere para preencher a matriz: ");
     scanf(" %c", &caractere);
 
-    preencherMatrizChar(matriz, caractere);
+    preencherMatriz(matriz, caractere);
     printf("\nMatriz preenchida:\n");
-    imprimirMatrizChar(matriz);
+    imprimirMatriz(matriz);
     printf("\n");
 
     char novoCaractere;
@@ -30,7 +30,7 @@ int main()
     inserirElementoChar(matriz, linha, coluna, novoCaractere);
 
     printf("Matriz após inserção:\n");
-    imprimirMatrizChar(matriz);
+    imprimirMatriz(matriz);
     printf("\n");
 
     printf("\nDigite a linha e coluna para acessar um elemento (ex: 2 2): ");
@@ -40,17 +40,17 @@ int main()
     int novasLinhas, novasColunas;
     printf("\nDigite o número de linhas e colunas para redimensionar a matriz: ");
     scanf("%d %d", &novasLinhas, &novasColunas);
-    redimensionarMatrizChar(&matriz, novasLinhas, novasColunas);
+    redimensionarMatriz(&matriz, novasLinhas, novasColunas);
 
     char novoCaracterePreenchimento;
     printf("Digite um novo caractere para preencher a matriz redimensionada: ");
     scanf(" %c", &novoCaracterePreenchimento);
-    preencherMatrizChar(matriz, novoCaracterePreenchimento);
+    preencherMatriz(matriz, novoCaracterePreenchimento);
 
     printf("\nMatriz redimensionada e preenchida:\n");
-    imprimirMatrizChar(matriz);
+    imprimirMatriz(matriz);
 
-    liberarMatrizChar(&matriz);
+    liberarMatriz(&matriz);
 
     return 0;
 }

@@ -1,36 +1,36 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct
+typedef struct MatrizInt
 {
     int linhas;
     int colunas;
     int matrizTamanho;
-    char *pont;
-} MatrizChar;
+    int *pont;
+} MatrizInt;
 
-MatrizChar criarMatrizChar(int linhas, int colunas)
+MatrizInt criarMatrizInt(int linhas, int colunas)
 {
-    MatrizChar novaMatriz;
+    MatrizInt novaMatriz;
     novaMatriz.linhas = linhas;
     novaMatriz.colunas = colunas;
     novaMatriz.matrizTamanho = linhas * colunas;
-    novaMatriz.pont = (char *)malloc(novaMatriz.matrizTamanho * sizeof(char));
+    novaMatriz.pont = (int *)malloc(novaMatriz.matrizTamanho * sizeof(int));
 
     return novaMatriz;
 }
 
-char acessarElementoChar(MatrizChar matriz, int linha, int coluna)
+int acessarElementoInt(MatrizInt matriz, int linha, int coluna)
 {
     if (linha < 1 || linha > matriz.linhas || coluna < 1 || coluna > matriz.colunas)
     {
         printf("Erro: Índices fora dos limites da matriz.\n");
         exit(1);
     }
-    return *(matriz.pont + ((linha - 1) * matriz.colunas + (coluna - 1)));
+    return matriz.pont[(linha - 1) * matriz.colunas + (coluna - 1)];
 }
 
-void inserirElementoChar(MatrizChar matriz, int linha, int coluna, char elemento)
+void inserirElementoInt(MatrizInt matriz, int linha, int coluna, int elemento)
 {
     if (linha < 1 || linha > matriz.linhas || coluna < 1 || coluna > matriz.colunas)
     {
@@ -40,21 +40,46 @@ void inserirElementoChar(MatrizChar matriz, int linha, int coluna, char elemento
     *(matriz.pont + ((linha - 1) * matriz.colunas + (coluna - 1))) = elemento;
 }
 
-void preencherMatrizChar(MatrizChar matriz, char elemento)
+MatrizInt somarMatrizInt(MatrizInt matriz1, MatrizInt matriz2)
 {
-    for (int c = 0; c < matriz.matrizTamanho; c++)
+    MatrizInt temp;
+    if (matriz1.matrizTamanho >= matriz2.matrizTamanho)
     {
-        *(matriz.pont + c) = elemento;
+        temp = matriz1;
+        imprimirMatrizInt(temp);
+        for (int c = 0; c < matriz2.matrizTamanho; c++)
+        {
+            *(temp.pont + c) += *(matriz2.pont + c);
+        }
+        return temp;
+    }
+    else
+    {
+        temp = matriz2;
+        imprimirMatrizInt(temp);
+        for (int c = 0; c < matriz1.matrizTamanho; c++)
+        {
+            *(temp.pont + c) += *(matriz2.pont + c);
+        }
+        return temp;
     }
 }
 
-void imprimirMatrizChar(MatrizChar matriz)
+void preencherMatrizInt(MatrizInt matriz, int num)
+{
+    for (int c = 0; c < matriz.matrizTamanho; c++)
+    {
+        *(matriz.pont + c) = num;
+    }
+}
+
+void imprimirMatrizInt(MatrizInt matriz)
 {
     int breakLine = 0;
     int tamanho = matriz.matrizTamanho;
     for (int c = 0; c < tamanho; c++)
     {
-        printf("%c ", *(matriz.pont + c));
+        printf("%d ", *(matriz.pont + c));
         breakLine++;
 
         if (breakLine == matriz.colunas)
@@ -65,9 +90,9 @@ void imprimirMatrizChar(MatrizChar matriz)
     }
 }
 
-void redimensionarMatrizChar(MatrizChar *matriz, int linhas, int colunas)
+void redimensionarMatrizInt(MatrizInt *matriz, int linhas, int colunas)
 {
-    char *vetorTemp = (char *)malloc(matriz->matrizTamanho * sizeof(char));
+    int *vetorTemp = (int *)malloc(matriz->matrizTamanho * sizeof(int));
     for (int c = 0; c < matriz->matrizTamanho; c++)
     {
         *(vetorTemp + c) = *(matriz->pont + c);
@@ -78,7 +103,7 @@ void redimensionarMatrizChar(MatrizChar *matriz, int linhas, int colunas)
     matriz->linhas = linhas;
     matriz->colunas = colunas;
     matriz->matrizTamanho = linhas * colunas;
-    matriz->pont = (char *)malloc(matriz->matrizTamanho * sizeof(char));
+    matriz->pont = (int *)malloc(matriz->matrizTamanho * sizeof(int));
 
     for (int c = 0; c < matriz->matrizTamanho; c++)
     {
@@ -88,7 +113,7 @@ void redimensionarMatrizChar(MatrizChar *matriz, int linhas, int colunas)
     free(vetorTemp);
 }
 
-void liberarMatrizChar(MatrizChar *matriz)
+void liberarMatrizInt(MatrizInt *matriz)
 {
     free(matriz->pont);
     matriz->pont = NULL;
