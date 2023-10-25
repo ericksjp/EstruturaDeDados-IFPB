@@ -509,6 +509,8 @@ void listarFuncionarios() {
     }
 }
 // -------------------------------------------------------------------------------------------------------------------------------
+
+// * Ordena um vetor de funcionários com base na ordem e criterio passados como parametro usando o algoritmo Bubble Sort.
 void bubbleSort(int ordem, int criterio) {
     int i, j;
     Funcionario aux;

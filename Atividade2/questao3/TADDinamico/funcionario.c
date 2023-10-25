@@ -10,7 +10,7 @@ Lista* cria_lista(){
     return NULL;
 }
 
-void checkAlocacaoMemoria(void *alocacao) {
+static void checkAlocacaoMemoria(void *alocacao) {
     if (alocacao == NULL) {
         perror("Erro: Falha na alocacao de memoria.");
         exit(1);
@@ -262,7 +262,7 @@ void limparBuffer() {
 void monitorarEncerramento(int *encerrar) {
     (*encerrar)++;
     if (*encerrar >= 5) {
-        printf("Encerrando a aplicação por motivos de segurança.\n");
+        printf("Encerrando a aplicaï¿½ï¿½o por motivos de seguranï¿½a.\n");
         exit(1);
     }
 }

@@ -14,24 +14,57 @@ int main(void) {
     char expressao10[] = "{8.4 + [1.0 - 2.5] / 5.0";
     
     printf("%s \n", expressao1);    
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao1) );
-    printf("\n%s \n", expressao2);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao2) );
-    printf("\n%s \n", expressao3);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao3) );
-    printf("\n%s \n", expressao4);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao4) );
-    printf("\n%s \n", expressao5);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao5) );
-    printf("\n%s \n", expressao6);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao6) );
-    printf("\n%s \n", expressao7);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao7) );
-    printf("\n%s \n", expressao8);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao8) );
-    printf("\n%s \n", expressao9);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao9) );
-    printf("\n%s \n", expressao10);        
-    printar_resultado( verificar_expressao_pilha_dinamica(expressao10) );
+    if (verificar_expressao_pilha_dinamica(expressao1))
+        printf("Expressao 1 esta balanceada\n\n");
+    else
+        printf("Expressao 1 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao2);    
+    if (verificar_expressao_pilha_dinamica(expressao2))
+        printf("Expressao 2 esta balanceada\n\n");
+    else
+        printf("Expressao 2 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao3);    
+    if (verificar_expressao_pilha_dinamica(expressao3))
+        printf("Expressao 3 esta balanceada\n\n");
+    else
+        printf("Expressao 3 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao4);    
+    if (verificar_expressao_pilha_dinamica(expressao4))
+        printf("Expressao 4 esta balanceada\n\n");
+    else
+        printf("Expressao 4 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao6);    
+    if (verificar_expressao_pilha_dinamica(expressao6))
+        printf("Expressao 6 esta balanceada\n\n");
+    else
+        printf("Expressao 6 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao7);    
+    if (verificar_expressao_pilha_dinamica(expressao7))
+        printf("Expressao 7 esta balanceada\n\n");
+    else
+        printf("Expressao 7 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao8);    
+    if (verificar_expressao_pilha_dinamica(expressao8))
+        printf("Expressao 8 esta balanceada\n\n");
+    else
+        printf("Expressao 8 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao9);    
+    if (verificar_expressao_pilha_dinamica(expressao9))
+        printf("Expressao 9 esta balanceada\n\n");
+    else
+        printf("Expressao 9 nao esta balanceada\n\n");
+
+    printf("%s \n", expressao10);    
+    if (verificar_expressao_pilha_dinamica(expressao10))
+        printf("Expressao 10 esta balanceada\n\n");
+    else
+        printf("Expressao 10 nao esta balanceada\n\n");
     return 0;
 }
